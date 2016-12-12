@@ -211,4 +211,26 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionTest()
+    {
+//        echo 'text';
+        /**
+         * where
+         * ['name'=>'value'] => WHERE name = value
+         * 'name = :value',[':value'=>'value'] => WHERE name = value
+         * [[], [] ...]
+         *  []
+         *
+         * Yii::$app->db->createCommand('')
+         */
+//        var_dump(User::find()->where(['id'=>'2'])->asArray()->one());
+//        var_dump(Yii::$app->db->createCommand('SELECT * FROM user WHERE id=:id')
+//            ->bindValue(':id',$_GET['id'])
+//        ->queryOne());
+        $bannedUsers=User::find()->where('id>=:value and id<:value1',[':value'=>2,':value1'=>4])->asArray()->all();
+        foreach($bannedUsers as $user){
+            echo $user['username'];
+            echo $user['email'].'<br>';
+        }
+    }
 }
