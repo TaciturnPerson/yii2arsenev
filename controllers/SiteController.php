@@ -31,8 +31,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
+                        'allow' => false,
                     ],
                     [
                         'actions' => ['logout'],
@@ -142,6 +141,10 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function actionControl()
+    {
+        return $this->render('control');
+    }
     /**
      * Signs user up.
      *

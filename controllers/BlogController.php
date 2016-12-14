@@ -31,6 +31,11 @@ class BlogController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['?',]
+                    ],
+                    [
+                        'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
