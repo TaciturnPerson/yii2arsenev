@@ -21,9 +21,30 @@ use yii\db\Expression;
  */
 class Blog extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
+
+    public function beforeSave($insert){
+        parent::beforeSave($insert);
+        if ($this->validate() && $this->imageFile) {
+            $nameFile='/uploads/p'.time().Yii::$app->user->id . '.' . $this->imageFile->extension;
+            $fileUrl=Yii::getAlias('@webroot').$nameFile;
+            if ($this->preview_element) {
+                unlink(Yii::getAlias('@webroot').$this->preview_element);
+            }
+            $this->imageFile->saveAs($fileUrl);
+            $this->preview_element=$nameFile;
+        }
+        return true;
+    }
+
+    public function afterDelete(){
+        parent::afterDelete();
+        unlink(Yii::getAlias('@webroot').$this->preview_element);
+    }
+
     public static function tableName()
     {
         return 'blog';
@@ -35,7 +56,8 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'preview_element'], 'required'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['title', 'content'], 'required'],
             [['author_id', 'moderator_id'], 'integer'],
             [['content'], 'string'],
             [['author_id', 'moderator_id', 'created_at', 'updated_at'], 'safe'],
