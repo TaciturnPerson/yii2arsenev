@@ -67,6 +67,7 @@ class BlogController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout = 'blog2';
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

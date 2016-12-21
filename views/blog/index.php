@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BlogSearch */
@@ -20,22 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
             echo Html::a('Create Blog', ['create'], ['class' => 'btn btn-success']);
         } ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'author_id',
-            'moderator_id',
-            'title',
-            'content:ntext',
-            // 'preview_element',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+    <?= ListView::widget([
+    'dataProvider' => $dataProvider,
+    'itemView' => '_blog',
     ]); ?>
 </div>
